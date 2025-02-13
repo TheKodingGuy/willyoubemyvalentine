@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Day</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .gradient-background {
+      background: linear-gradient(180deg, rgba(255, 208, 229, 1) 0%, rgba(255, 232, 242, 1) 36%, rgba(255, 255, 255, 1) 100%);
+    }
+    .bounce2 {
+      animation: bounce2 2s ease infinite;
+    }
+    @keyframes bounce2 {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-20px); }
+      60% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body class="gradient-background flex items-center justify-center h-screen">
+
+  <div class="flex flex-col items-center text-center p-4 w-full max-w-[90%] sm:max-w-[500px]">
+    <img id="imageDisplay" src="./images/image1.gif" alt="Cute kitten with flowers"
+      class="rounded-md w-full max-w-[300px] h-auto object-cover" />
+      
+    <h2 id="valentineQuestion" class="text-2xl sm:text-4xl font-bold italic text-[#bd1e59] my-4">
+      Will you be my Valentine?
+    </h2>
+
+    <div class="flex gap-4 pt-4 items-center" id="responseButtons">
+      <button id="yesButton"
+        class="bounce2 inline-flex items-center justify-center rounded-md text-lg sm:text-2xl font-medium 
+        disabled:pointer-events-none disabled:opacity-50 hover:bg-green-400 min-h-12 min-w-[20%] sm:min-w-[150px] px-6 py-3 
+        bg-green-500 text-white transition">
+        Yes
+      </button>
+      <button id="noButton"
+        class="inline-flex items-center justify-center rounded-md text-lg sm:text-2xl font-medium transition 
+        disabled:pointer-events-none disabled:opacity-50 hover:bg-red-700 h-12 min-w-[20%] sm:min-w-[150px] px-6 py-3 
+        bg-red-500 text-white">
+        No
+      </button>
+    </div>
+  </div>
+
+  <script type="module">
+    import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+    
+    const yesButton = document.getElementById('yesButton');
+    const noButton = document.getElementById('noButton');
+    const imageDisplay = document.getElementById('imageDisplay');
+    const valentineQuestion = document.getElementById('valentineQuestion');
+    const responseButtons = document.getElementById('responseButtons');
+    
+    let noClickCount = 0;
+    let buttonScale = 1;
+    
+    const imagePaths = [
+      "./images/image1.gif",
+      "./images/image2.gif",
+      "./images/image3.gif",
+      "./images/image4.gif",
+      "./images/image5.gif",
+      "./images/image6.gif",
+      "./images/image7.gif"
+    ];
+
+    noButton.addEventListener('click', function() {
+      if (noClickCount < 5) {
+        noClickCount++;
+        imageDisplay.src = imagePaths[noClickCount];
+        buttonScale += 0.3;
+        yesButton.style.transform = `scale(${buttonScale})`;
+        noButton.textContent = ["No", "Are you sure?", "Baby please", "Don't do this to me :(", "My heart baby :'(", "I'm gonna cry..."][noClickCount];
+      }
+    });
+
+    yesButton.addEventListener('click', () => {
+      imageDisplay.src = './images/image7.gif';
+      valentineQuestion.textContent = "Yayyy!! :3";
+      responseButtons.style.display = 'none';
+      confetti();
+    });
+  </script>  
+
+</body>
+</html>
